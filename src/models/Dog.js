@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      age: { type: DataTypes.INTEGER, allowNull: false },
+      age: { type: DataTypes.STRING, allowNull: false },
     },
     {
       timestamp: false,

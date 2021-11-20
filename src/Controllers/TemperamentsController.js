@@ -30,7 +30,6 @@ const saveTemperament = async () => {
       console.log(err + "negado ");
     });
 };
-//saveTemperament();
 
 module.exports = {
   temperament: saveTemperament,
