@@ -3,7 +3,7 @@ const { API_KEY, URL } = process.env;
 const { Dog, Temperament } = require("../db"); // Nos traemos el modelo dogs  para manejaro desde aca
 const axios = require("axios").default;
 
-// Creo una funcion que me retorne todos los perros
+// Creo una funcion que me retorne todos los perros de la api con la data tratada
 
 const getDogs = async () => {
   try {
@@ -30,6 +30,7 @@ const getDogs = async () => {
   }
 };
 
+// Funcion para tener los perros de la base de datos ya tratados
 const getDogDb = async () => {
   try {
     const dogs = await Dog.findAll({ include: Temperament });
@@ -46,25 +47,26 @@ const getDogDb = async () => {
           .reduce((a, b) => a + ", " + b),
       };
     });
-    console.log(totalDogs);
+    //console.log(totalDogs);
+    return totalDogs;
   } catch (e) {
     console.log(e);
   }
 };
-
+// Funcion donde guardamos  todos los perros tanto  de la api como del la base de datos
 const totalDogs = async () => {
   try {
     const apiDogs = await getDogs();
-    const dataDB = await Dog.findAll({ include: Temperament });
-    //console.log(apiDogs);
-    console.log(dataDB.length);
-    console.log(dataDB);
-    // return dataDB;
+    const dataDB = await getDogDb();
+
+    const data = [...apiDogs, dataDB];
+    //console.log(data);
+    return data;
   } catch (e) {
     console.log;
   }
 };
-
+// funcion para testear la creacion de un perro
 const createData = async () => {
   try {
     const newDog = await Dog.create({
@@ -94,6 +96,10 @@ const createData = async () => {
 //  console.log("todooo va bien");
 //});
 
-getDogDb().then(() => {
+/*getDogDb().then(() => {
   console.log("promesa realizada");
-});
+});*/
+
+module.exports = {
+  getDogs: totalDogs,
+};

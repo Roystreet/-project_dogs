@@ -2,6 +2,7 @@ const router = require("express").Router();
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const { Temperament, Dog } = require("../db");
+const { getDogs } = require("../Controllers/DogsController");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
@@ -24,9 +25,7 @@ router.get("/dogs", (req, res) => {
 });
 
 router.get("/perroscasa", async (req, res) => {
-  Dog.findAll({ include: Temperament }).then((result) =>
-    res.status(200).json(result)
-  );
+  getDogs().then((result) => res.status(200).json(result));
 });
 
 module.exports = router;
