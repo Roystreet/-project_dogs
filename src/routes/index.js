@@ -23,4 +23,10 @@ router.get("/dogs", (req, res) => {
     .catch((result) => res.status(400).json({ message: result }));
 });
 
+router.get("/perroscasa", async (req, res) => {
+  Dog.findAll({ include: Temperament }).then((result) =>
+    res.status(200).json(result)
+  );
+});
+
 module.exports = router;

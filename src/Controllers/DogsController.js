@@ -33,10 +33,20 @@ const getDogs = async () => {
 const getDogDb = async () => {
   try {
     const dogs = await Dog.findAll({ include: Temperament });
-    //const totalDogs = await dogs.map((data) => {});
-    dogs.forEach((data) => {
-      console.log(data.id);
+    const totalDogs = dogs.map((data) => {
+      return {
+        id: data.id,
+        name: data.name,
+        image: data.img,
+        height: data.height,
+        weight: data.weight,
+        age: data.age,
+        temperament: data.temperaments
+          .map((temperament) => temperament.dataValues.name)
+          .reduce((a, b) => a + ", " + b),
+      };
     });
+    console.log(totalDogs);
   } catch (e) {
     console.log(e);
   }
@@ -64,9 +74,7 @@ const createData = async () => {
       weight: "25",
       age: "algo",
     });
-
-    console.log(await newDog.getTemperaments());
-    newDog.setTemperaments([1, 2, 3, 4]).then(() => {
+    newDog.setTemperaments([2, 3, 4]).then(() => {
       console.log("success registro");
     });
   } catch (err) {
@@ -74,14 +82,14 @@ const createData = async () => {
   }
 }; //
 
-//createData()
-//  .then(() => {
-//    console.log("success registro");
-//  })
-// .catch((err) => {
-//   console.log(err);
-//  });
-
+/*createData()
+  .then(() => {
+    console.log("success registro");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+*/
 //totalDogs().then(() => {
 //  console.log("todooo va bien");
 //});
