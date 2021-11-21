@@ -6,6 +6,28 @@ const { getDogs } = require("../Controllers/DogsController");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+router.get("/dogs", async (req, res) => {
+  try {
+    const { name } = req.query;
+    const data = await getDogs();
+    if (name) {
+      s;
+      const datafiltrada = data.filter((data) => data.name === name);
+      if (datafiltrada.length > 0) {
+        res.status(200).json(datafiltrada);
+      } else {
+        res.status(404).json({ message: "Dog no encontrado" });
+      }
+    } else {
+      res.status(200).json(data);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get("/dogs/id", async (req, res) => {});
+
 router.post("/dogs", (req, res) => {
   Dog.create({
     name: "perro",
@@ -18,14 +40,6 @@ router.post("/dogs", (req, res) => {
     .catch((result) => res.status(400).json({ message: result }));
 });
 
-router.get("/dogs", (req, res) => {
-  Dog.findAll()
-    .then((result) => res.status(200).json({ message: result }))
-    .catch((result) => res.status(400).json({ message: result }));
-});
-
-router.get("/perroscasa", async (req, res) => {
-  getDogs().then((result) => res.status(200).json(result));
-});
+router.get("/temperament", async (req, res) => {});
 
 module.exports = router;
