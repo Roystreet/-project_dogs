@@ -30,12 +30,15 @@ const getDogs = async () => {
   }
 };
 
-const dogsDatabases = async () => {
+const getDogDb = async () => {
   try {
-    //const dogs = await Dog.findAll({ include: "temperament" });
-    // const totalDogs=
+    const dogs = await Dog.findAll({ include: Temperament });
+    //const totalDogs = await dogs.map((data) => {});
+    dogs.forEach((data) => {
+      console.log(data.id);
+    });
   } catch (e) {
-    console.log("error");
+    console.log(e);
   }
 };
 
@@ -43,18 +46,46 @@ const totalDogs = async () => {
   try {
     const apiDogs = await getDogs();
     const dataDB = await Dog.findAll({ include: Temperament });
-    console.log(apiDogs);
+    //console.log(apiDogs);
     console.log(dataDB.length);
-    return dataDB;
+    console.log(dataDB);
+    // return dataDB;
   } catch (e) {
     console.log;
   }
 };
 
-totalDogs()
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((err) => {
-    console.log(err + "ultimo errror");
-  });
+const createData = async () => {
+  try {
+    const newDog = await Dog.create({
+      name: "junior",
+      img: "http://",
+      height: "25",
+      weight: "25",
+      age: "algo",
+    });
+
+    console.log(await newDog.getTemperaments());
+    newDog.setTemperaments([1, 2, 3, 4]).then(() => {
+      console.log("success registro");
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}; //
+
+//createData()
+//  .then(() => {
+//    console.log("success registro");
+//  })
+// .catch((err) => {
+//   console.log(err);
+//  });
+
+//totalDogs().then(() => {
+//  console.log("todooo va bien");
+//});
+
+getDogDb().then(() => {
+  console.log("promesa realizada");
+});

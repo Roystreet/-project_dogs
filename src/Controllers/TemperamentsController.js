@@ -31,6 +31,11 @@ const saveTemperament = async () => {
     });
 };
 
+const getTemperaments = async () => {
+  const temperamentos = await Temperament.findAll();
+  console.log(temperamentos);
+};
+
 module.exports = {
   temperament: saveTemperament,
 };
