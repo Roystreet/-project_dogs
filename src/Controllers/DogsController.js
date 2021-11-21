@@ -10,7 +10,7 @@ const getDogs = async () => {
     //const dogs = [];
     const api = await axios.get(URL);
     const listDogs = api.data;
-    // console.log(listDogs);
+    //console.log(listDogs);
     // console.log(listDogs);
     const objeto = listDogs.map((data) => {
       return {
@@ -29,6 +29,9 @@ const getDogs = async () => {
     console.log(e);
   }
 };
+//getDogs()
+//  .then((data) => console.log("logrado"))
+// .catch((e) => console.log(e));
 
 // Funcion para tener los perros de la base de datos ya tratados
 const getDogDb = async () => {
@@ -44,10 +47,13 @@ const getDogDb = async () => {
         age: data.age,
         temperament: data.temperaments
           .map((temperament) => temperament.dataValues.name)
-          .reduce((a, b) => a + ", " + b),
+          .reduce((acc, name) => {
+            if (acc == "") return name;
+            return acc + ", " + name;
+          }, ""),
       };
     });
-    //console.log(totalDogs);
+    // console.log(totalDogs);
     return totalDogs;
   } catch (e) {
     console.log(e);
@@ -59,11 +65,11 @@ const totalDogs = async () => {
     const apiDogs = await getDogs();
     const dataDB = await getDogDb();
 
-    const data = [...apiDogs, dataDB];
+    const data = [...apiDogs, ...dataDB];
     //console.log(data);
     return data;
   } catch (e) {
-    console.log;
+    console.log(e);
   }
 };
 // funcion para testear la creacion de un perro
@@ -90,15 +96,15 @@ const createData = async () => {
   })
   .catch((err) => {
     console.log(err);
-  });
+  });+
 */
 //totalDogs().then(() => {
 //  console.log("todooo va bien");
 //});
 
-/*getDogDb().then(() => {
-  console.log("promesa realizada");
-});*/
+//getDogDb().then(() => {
+//  console.log("promesa realizada");
+//});
 
 module.exports = {
   getDogs: totalDogs,

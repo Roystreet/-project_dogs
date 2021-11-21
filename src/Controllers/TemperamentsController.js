@@ -33,9 +33,16 @@ const saveTemperament = async () => {
 
 const getTemperaments = async () => {
   const temperamentos = await Temperament.findAll();
-  console.log(temperamentos);
+  const temperament = temperamentos.map((data) => {
+    return {
+      id: data.id,
+      name: data.name,
+    };
+  });
+  return temperament;
 };
 
 module.exports = {
   temperament: saveTemperament,
+  dogTemperament: getTemperaments,
 };
