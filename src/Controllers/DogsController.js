@@ -65,7 +65,7 @@ const totalDogs = async () => {
     const apiDogs = await getDogs();
     const dataDB = await getDogDb();
 
-    const data = [...apiDogs, ...dataDB];
+    const data = [...dataDB, ...apiDogs];
     //console.log(data);
     return data;
   } catch (e) {

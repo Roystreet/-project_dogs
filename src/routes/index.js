@@ -8,7 +8,7 @@ const { dogTemperament } = require("../Controllers/TemperamentsController.js");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get("/dogs", async (req, res) => {
+router.get("/dogs", async (req, res, next) => {
   try {
     const { name } = req.query;
     const data = await getDogs();
@@ -25,7 +25,7 @@ router.get("/dogs", async (req, res) => {
       res.status(200).json(data);
     }
   } catch (e) {
-    console.log(e);
+    next(e);
   }
 });
 
